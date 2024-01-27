@@ -28,9 +28,9 @@ def draw_list(win, arr):
 
 
 def draw_list_1(win, arr):
-    coordinates = polygone_calculator(len(arr), 50)
+    coordinates = polygone_calculator(len(arr), 200)
     for coord in coordinates:
-        pygame.draw.circle(win, "red", coord, 5)
+        pygame.draw.circle(win, "red", coord, 50)
 
 
 def draw(win, arr):
