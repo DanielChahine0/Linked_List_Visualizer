@@ -8,7 +8,7 @@ pygame.init()
 WIDTH, HEIGHT = 750, 750
 
 
-array = [3, 4, 5]
+array = [3, 4]
 
 # linked list
 CIRCLE_RAD = 50
@@ -38,27 +38,28 @@ def draw(win, arr):
     draw_list_1(win, arr)
 
 
-
 # --- position calculator
 # Calculates the x,y coordinates of a polygone given the number of sides it has
 def polygone_calculator(n, d):
-
-    if n<3:
-        return ((0,0))
+    coordinates = []
+    if n == 0:
+        pass
+    elif n == 1:
+        coordinates.append((WIDTH//2, HEIGHT//2))
+    elif n == 2:
+        coordinates.append((WIDTH/2-d, HEIGHT/2))
+        coordinates.append((WIDTH/2+d, HEIGHT/2))
     else:
         # Calculate the angle between consecutive vertices
         angle = 360 / n
 
-        # Initialize a list to store the coordinates
-        coordinates = []
-
         # Calculate coordinates for each vertex
         for i in range(n):
-            x = d * math.cos(math.radians(i * angle)) + WIDTH/2
-            y = d * math.sin(math.radians(i * angle)) + HEIGHT/2
+            x = d * math.cos(math.radians(i * angle)) + WIDTH//2
+            y = d * math.sin(math.radians(i * angle)) + HEIGHT//2
             coordinates.append((x, y))
 
-        return coordinates
+    return coordinates
 
 
 def main(win, arr):
@@ -75,16 +76,24 @@ def main(win, arr):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     arr.append(1)
-                if event.key == pygame.K_1:
-                    arr.insert(0, 1)
-                if event.key == pygame.K_2:
-                    arr.insert(1, 1)
-                if event.key == pygame.K_3:
-                    arr.insert(2, 1)
-                if event.key == pygame.K_4:
-                    arr.insert(3, 1)
-                if event.key == pygame.K_5:
-                    arr.insert(4, 1)
+                elif event.key == pygame.K_BACKSPACE:
+                    if len(arr) > 0:
+                        arr.pop()
+                elif event.key == pygame.K_1:
+                    for i in range(1):
+                        arr.insert(0, 1)
+                elif event.key == pygame.K_2:
+                    for i in range(2):
+                        arr.insert(0, 1)
+                elif event.key == pygame.K_3:
+                    for i in range(3):
+                        arr.insert(0, 1)
+                elif event.key == pygame.K_4:
+                    for i in range(4):
+                        arr.insert(0, 1)
+                elif event.key == pygame.K_5:
+                    for i in range(5):
+                        arr.insert(0, 1)
 
         # drawing methods
         draw(win, arr)
@@ -94,6 +103,7 @@ def main(win, arr):
     # Quit the program
     pygame.quit()
     quit()
+
 
 # if we're running the main file directly
 if __name__ == '__main__':
