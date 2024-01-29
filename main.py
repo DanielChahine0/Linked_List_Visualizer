@@ -55,8 +55,8 @@ def polygone_calculator(n, d):
 
         # Calculate coordinates for each vertex
         for i in range(n):
-            x = d * math.cos(math.radians(i * angle)) + WIDTH//2
-            y = d * math.sin(math.radians(i * angle)) + HEIGHT//2
+            x = (d * math.cos(math.radians(i * angle))) + WIDTH//2
+            y = (d * math.sin(math.radians(i * angle))) + HEIGHT//2
             coordinates.append((x, y))
 
     return coordinates
