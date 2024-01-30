@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 
+
 def visualize_turing_machine(states, transitions):
     G = nx.DiGraph()
 
@@ -30,13 +31,15 @@ def visualize_turing_machine(states, transitions):
     plt.axis("off")
     plt.show()
 
+
 # Example Turing machine states and transitions
 tm_states = ['q0', 'q1', 'q2', 'q3']
 tm_transitions = [
-    ('q0', 'q1', '0', '1', 'R'),
+    ('q0', 'q1'),
     ('q1', 'q2', '1', '0', 'L'),
     ('q2', 'q3', '0', '1', 'R'),
 ]
 
 # Visualize the Turing machine
-visualize_turing_machine(tm_states, tm_transitions)
+if __name__ == '__main__':
+    visualize_turing_machine(tm_states, tm_transitions)
