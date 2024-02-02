@@ -5,7 +5,9 @@ import tkinter as tk
 from tkinter import simpledialog
 
 linkedList = [1, 2, 3, 4, 5, 6]
+typeOfList = "double circular"
 
+N = nx.DiGraph()
 
 def LLVisualizer(l_list, link_type):
     N = nx.DiGraph()
@@ -14,6 +16,7 @@ def LLVisualizer(l_list, link_type):
     N.add_nodes_from(l_list)
 
     # If our list is a Singly-Linked List
+    # Make all the nodes connected with next pointer
     if link_type == "singly":
         for i in range(len(l_list)-1):
             from_node = l_list[i]
@@ -21,6 +24,7 @@ def LLVisualizer(l_list, link_type):
             N.add_edge(from_node, to_node)
 
     # If our list is a Circular-Linked List
+    # Make all nodes connected with next pointer and tail is connected to end
     elif link_type == "circular":
         N.add_edge( l_list[len(l_list)-1], l_list[0])
         for i in range(len(l_list)-1):
@@ -29,6 +33,7 @@ def LLVisualizer(l_list, link_type):
             N.add_edge(from_node, to_node)
 
     # If our list is a Doubly-Linked List
+    # All nodes are connected with next and prev pointer
     elif link_type == "double":
         for i in range(len(l_list)-1):
             from_node = l_list[i]
@@ -37,6 +42,7 @@ def LLVisualizer(l_list, link_type):
             N.add_edge(to_node, from_node)
 
     # If our list is a Circular Doubly-Linked List
+    # All nodes are connected with next and prev pointer and tail is connected to head
     elif link_type == "double circular":
         N.add_edge(l_list[len(l_list) - 1], l_list[0])
         N.add_edge(l_list[0], l_list[len(l_list) - 1])
@@ -58,58 +64,38 @@ def LLVisualizer(l_list, link_type):
     # Display the value of our nodes
     nx.draw_networkx_labels(N, position, font_size=5, font_color="white")
 
-
-    # Add a button to the current plot
-    button_ax = plt.axes([0.81, 0.01, 0.1, 0.05])  # [left, bottom, width, height]
-    button = Button(button_ax, 'Click Me')
-
-
-
-    # plt.axis("off")
-    button.on_clicked(on_button_click)
-
+    buutt()
 
     # Show our network System
     plt.show()
+    # plt.axis("off")
 
-def on_button_click(event):
-    # Add a new node to the list
-    linkedList.append(max(linkedList) + 1)
-
-    # Clear the current plot
-    plt.clf()
-
-    # Update and redraw the graph with the new node
-    LLVisualizer(linkedList, "double circular")
-
-    # Redraw the plot
-    plt.draw()
-
-
-def get_user_input():
-    # Create Tkinter root window (hidden)
-    root = tk.Tk()
-    root.withdraw()
-
-    # Prompt user for input using a text box
-    user_input = simpledialog.askstring("Input", "Enter text:")
-
-    # Destroy the root window
-    root.destroy()
-
-    return user_input
-
-
-if __name__ == '__main__':
-    LLVisualizer(linkedList, "double circular")
-
+def buutt():
     # Add a button to the current plot
     button_ax = plt.axes([0.81, 0.01, 0.1, 0.05])  # [left, bottom, width, height]
     button = Button(button_ax, 'Click Me')
 
-    # Attach the button click event
-    button.on_clicked(on_button_click)
+    # plt.axis("off")
+    button.on_clicked(on_click)
 
-    # Show the initial plot
+def on_click(event):
+    global linkedList
+    # Add a new node to the list
+    linkedList.append(max(linkedList) + 1)
+    print(linkedList)
+    N.add_nodes_from(linkedList)
+    # Draw the updated network
+    position = nx.circular_layout(N)
+    plt.clf()  # Clear the previous plot
+    nx.draw_networkx_nodes(N, position, node_size=500, node_color="red")
+    nx.draw_networkx_edges(N, position)
+    nx.draw_networkx_labels(N, position, font_size=5, font_color="white")
+    plt.draw()
     plt.show()
+
+
+if __name__ == '__main__':
+
+    LLVisualizer(linkedList, typeOfList)
+
 
